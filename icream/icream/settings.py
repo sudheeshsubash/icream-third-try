@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ocmc=-p#4(wz_1mf$nl9**)a*_xl4*7k#kh2r+#h32tztofcb0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','localhost','18.179.46.58']
 
 
 
