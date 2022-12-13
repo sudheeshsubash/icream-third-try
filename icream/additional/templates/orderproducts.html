@@ -1,0 +1,116 @@
+
+{% extends 'userdashbord.html' %}
+
+{% block content %}
+
+  <!-- Table Start -->
+
+  <div class="bg-light rounded ">
+    <h6 class="mb-4">User Table</h6>
+    <table class="table display nowrap">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Price</th>
+                <th scope="col">Payment Type</th>
+                <th scope="col">Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          {% for item in order_history %}
+
+          {% if not item.is_cancel %}
+          
+          <tr>
+              <td> {{ forloop.counter }} </td>
+              <td> {{ item.user_id.username }} </td>
+              <td> {{ item.product_name }} </td>
+              <td> {{ item.product_qty }} </td>
+              <td> {{ item.product_total }} </td>
+
+              {% if item.payment_type %}
+              <td>Cash On Delivery</td>
+              {% else %}
+              <td>Online Delivery</td>
+              {% endif %}
+
+
+              {% if item.is_payment %}
+              <td>Payment Success <button onclick="cancelorder({{item.id}})" class="btn btn-primary" >Cancel</button></td>
+              {% else %}
+              <td>Payment Pending <button onclick="cancelorder({{item.id}})" class="btn btn-primary" >Cancel</button></td>
+              {% endif %}
+              
+          </tr>
+
+          {% endif %}
+
+          {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+    <!--Table end-->
+
+
+    <script>
+
+      function cancelorder(orderid){
+        console.log(orderid)
+        swal({
+          title: "Are you sure? Cancel Your Order",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("Cancel Or", {
+              icon: "success",
+            });
+            $.ajax({
+              url : '/ordertrack/cancel',
+              type : 'GET',
+              data : {
+                'orderid' : orderid
+              },
+              success : function(data){
+                console.log(data.yes)
+                location.href = ""
+              }
+
+            })
+          }
+        });
+      }
+  
+
+
+    </script>
+
+
+
+    <script>
+      $(document).ready(function() {
+          $('#example').DataTable( {
+              dom: 'Bfrtip',
+              buttons: [
+                  'copy', 'csv', 'excel', 'pdf', 'print'
+              ]
+          } );
+      } );
+      </script>
+                  
+      
+
+                        
+                        
+
+
+{% endblock content %}

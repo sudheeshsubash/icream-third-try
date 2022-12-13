@@ -1,0 +1,155 @@
+{% extends 'navandfooter.html' %}
+
+{% block w %}{{wishlist_badge}}{% endblock w %}
+{% block c %}{{cart_badge}}{% endblock c %}
+
+{% block carousel %}
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 mb-5 pb-5">
+        <div id="header-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% for banner in curosal %}
+                <div class="carousel-item active">
+                    <img class="w-100" src="{{banner.banner_image.url}}" alt="Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-md-3">Traditional & Delicious</h4>
+                            <h1 class="display-3 text-white mb-md-4">Traditional Ice Cream Since 1950</h1>
+                            <a href="{% url 'about' %}" class="btn btn-primary py-md-3 px-md-5 mt-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                <div class="btn btn-secondary px-0" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-prev-icon mb-n1"></span>
+                </div>
+            </a>
+            <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                <div class="btn btn-secondary px-0" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-next-icon mb-n1"></span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- Carousel End -->
+{% endblock carousel %}
+
+{% block about %}
+{% load static %}
+
+    <!-- Services Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative mb-5">Best Services We Provide For Our Clients</h1>
+                </div>
+                <div class="col-lg-6 mb-5 mb-lg-0 pb-5 pb-lg-0"></div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="owl-carousel service-carousel">
+                        <div class="service-item">
+                            <div class="service-img mx-auto">
+                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="{% static 'img/service-1.jpg' %}" style="object-fit: cover;">
+                            </div>
+                            <div class="position-relative text-center bg-light rounded p-4 pb-5" style="margin-top: -75px;">
+                                <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">Quality Maintain</h5>
+                                <p>Dolor nonumy sed eos sed lorem diam amet eos magna. Dolor kasd lorem duo stet kasd justo</p>
+
+                                <a href="{% url 'about' %}" class="border-bottom border-secondary text-decoration-none text-secondary">Learn More</a>
+
+
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-img mx-auto">
+                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="{% static 'img/service-4.jpg' %}" style="object-fit: cover;">
+                            </div>
+                            <div class="position-relative text-center bg-light rounded p-4 pb-5" style="margin-top: -75px;">
+                                <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">Individual Approach</h5>
+                                <p>Dolor nonumy sed eos sed lorem diam amet eos magna. Dolor kasd lorem duo stet kasd justo</p>
+
+
+                                <a href="{% url 'about' %}" class="border-bottom border-secondary text-decoration-none text-secondary">Learn More</a>
+
+
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-img mx-auto">
+                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="{% static 'img/service-3.jpg' %}" style="object-fit: cover;">
+                            </div>
+                            <div class="position-relative text-center bg-light rounded p-4 pb-5" style="margin-top: -75px;">
+                                <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">Celebration Ice Cream</h5>
+                                <p>Dolor nonumy sed eos sed lorem diam amet eos magna. Dolor kasd lorem duo stet kasd justo</p>
+
+  
+                                <a href="{% url 'about' %}" class="border-bottom border-secondary text-decoration-none text-secondary">Learn More</a>
+
+
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-img mx-auto">
+                                <img class="rounded-circle w-100 h-100 bg-light p-3" src="{% static 'img/service-4.jpg' %}" style="object-fit: cover;">
+                            </div>
+                            <div class="position-relative text-center bg-light rounded p-4 pb-5" style="margin-top: -75px;">
+                                <h5 class="font-weight-semi-bold mt-5 mb-3 pt-5">Delivery To Any Point</h5>
+                                <p>Dolor nonumy sed eos sed lorem diam amet eos magna. Dolor kasd lorem duo stet kasd justo</p>
+
+
+                                <a href="{% url 'about' %}" class="border-bottom border-secondary text-decoration-none text-secondary">Learn More</a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Services End -->
+
+{% endblock about %}
+
+{% block product %}
+    
+        
+    <!-- Products Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative mb-5">Best Prices We Offer For Ice Cream Lovers</h1>
+                </div>
+                <div class="col-lg-6 mb-5 mb-lg-0 pb-5 pb-lg-0"></div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="owl-carousel product-carousel">
+                        {% for items in product_items %}
+                        
+                        <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                            <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                                <h4 class="font-weight-bold text-white mb-0"><i class="fa fa-inr" style="font-size:23px"></i>&nbsp;{{items.product_price}}</h4>
+                            </div>
+                            <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
+                                <img class="rounded-circle w-100 h-100" src="{{items.product_image.url}}" style="object-fit: cover;">
+                            </div>
+                            <h5 class="font-weight-bold mb-4">{{items.product_name}}</h5>
+                            <a href="{% url 'product' %}" class="btn btn-sm btn-secondary">View More</a>
+                        </div>
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Products End -->
+
+    
+{% endblock product %}

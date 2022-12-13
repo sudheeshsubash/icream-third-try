@@ -1,0 +1,43 @@
+{% extends 'navandfooter.html' %}
+
+{% block carousel %}
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative text-center mb-5">Add Address</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+        
+                    <div class="contact-form bg-light rounded p-5">
+                        <div id="success"></div>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            
+                            
+                            {{ forms }}
+
+                            <br>
+                            <div>
+                                <input class="btn btn-primary btn-block py-3 px-5"  type="submit" id="sendMessageButton">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+
+    <script>
+
+    </script>
+
+{% endblock %}

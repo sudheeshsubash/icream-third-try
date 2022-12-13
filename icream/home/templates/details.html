@@ -1,0 +1,132 @@
+{% extends 'navandfooter.html' %}
+
+{% block w %}{{wishlist_badge}}{% endblock w %}
+{% block c %}{{cart_badge}}{% endblock c %}
+
+{% block style %}
+
+<style> 
+  .zoomimage {
+    background-image: url('{{product_details.product_image.url}}');
+    background-color: #cccccc;
+    background-size: contain;
+    width: 400px;
+    height: 400px;
+    border: 1px solid black;
+  }
+  .zoomimage:hover{
+      transition: 0.3s  ease-out;
+      background-size: 300%;
+  }
+  </style>
+
+{% endblock style %}
+
+
+{% block carousel %}{% endblock carousel %}
+
+
+{% block product %}
+{% load static %}
+
+  <!-- shop section -->
+  <section class="shop_section layout_padding">
+    <div class="container">
+        <br><br><br>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center ">
+            <div class="shop-detail">
+              <h5>
+                {{product_details.product_name}}
+              </h5>
+              <p>
+                {{product_details.product_discription}}
+              </p>
+            </div>
+        </div>
+            <div class="quantity-content">
+                <div class="left-content d-flex flex-row">
+                <div class="">
+                  {% if 'username' in request.session %}
+                  <a href="" class="btn btn-sm btn-success">Add To Cart</a>
+                  {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-sm btn-success">Add To Cart</a>
+                  {% endif %}
+
+                  {% if 'username' in request.session %}
+                  <a href="" class="btn btn-sm btn-primary">Add to Wishlist</a>
+                  {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-sm btn-primary">Add to Wishlist</a>
+                  {% endif %}
+
+                </div>
+              </div>
+            </div><br>
+        </div>
+        <div class="container col-md-6">
+          <div class="shop_img-box">
+            <div class="zoomimage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end shop section -->
+
+
+  <script>
+    const image = document.querySelector('.zoomimage');
+    image.addEventListener('mousemove',function(e){
+        let width = image.offsetWidth;
+        let height = image.offsetHeight;
+        let mouseX = e.offsetX;
+        let mouseY = e.offsetY;
+        let bgposx = (mouseX / width * 100)
+        let bgposy = (mouseY / height * 100)
+        image.style.backgroundPosition = `${bgposx}% ${bgposy}%`;
+    })
+    image.addEventListener('mouseleave',function(){
+        image.style.backgroundPosition = 'center';
+    })
+</script>
+
+
+
+<br><br><br>
+<hr>
+<br><br><br>
+
+
+
+<div class='container'>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="quantity-content">
+        <div class="left-content">
+          <div class="">
+            {% for x in product_review %}<hr>
+              <img src="{% static 'img/logo.webp' %}" style="width:40px "  class="rounded">
+              {{x.user_id.username}}<br>
+              {% if x.rate >= 1 %}<span class="fa fa-star checked" style="color:yellow"></span>{% else %}<span class="fa fa-star checked"></span>{% endif %}
+              {% if x.rate >= 2 %}<span class="fa fa-star checked" style="color:yellow"></span>{% else %}<span class="fa fa-star checked"></span>{% endif %}
+              {% if x.rate >= 3 %}<span class="fa fa-star checked" style="color:yellow"></span>{% else %}<span class="fa fa-star checked"></span>{% endif %}
+              {% if x.rate >= 4 %}<span class="fa fa-star checked" style="color:yellow"></span>{% else %}<span class="fa fa-star checked"></span>{% endif %}
+              {% if x.rate >= 5 %}<span class="fa fa-star checked" style="color:yellow"></span>{% else %}<span class="fa fa-star checked"></span>{% endif %}
+              <br>
+              {{x.message}}
+ 
+              <br><br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+
+
+{% endblock product %}

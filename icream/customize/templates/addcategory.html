@@ -1,0 +1,17 @@
+{% extends 'admindemo.html' %}
+
+{% block content %}
+
+<h2>Add Category</h2>
+
+<form method='post' action='' enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{forms.as_p}}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  {% endblock content %}
+  

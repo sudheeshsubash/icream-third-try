@@ -1,0 +1,145 @@
+{% extends 'navandfooter.html' %}
+
+{% block w %}{{wishlist_badge}}{% endblock w %}
+{% block c %}{{cart_badge}}{% endblock c %}
+
+{% block carousel %}{% endblock carousel %}
+
+
+{% block product %}
+
+            <!-- Table Start -->
+            <div class="container-fluid pt-4 px-4">
+            <div class="bg-light rounded-top p-4">
+
+                <div class="row ">
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Cart</h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Product Image</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {% for list in cart_list %}
+                                    <tr>
+                                        <th scope="row">{{ list.product_id.product_name }}</th>
+                                        <td>
+                                            <img src='{{ list.product_id.product_image.url }}' style="width:50px"  title='product image'>
+                                        </td>
+                                        <td>
+                                            <b onclick="decrement({{list.product_id.id}})" class="button-minus icon-shape icon-sm mx-1 " style="font-size: 30px; cursor:pointer;">-</b>
+                                            <input type="text" min='0' max="50" value="{{ list.cart_quantity }}" id="quantity{{list.product_id.id}}" name="quantity" class="quantity-field border-0 text-center w-25">
+                                            <b onclick="increse({{list.product_id.id}})" class="button-plus  icon-shape icon-sm "  style="font-size: 30px; cursor:pointer;">+</b>
+                                        </td>
+                                        <td>
+                                            <a onclick="removecart({{list.product_id.id}})" style="cursor:pointer;" type="button" class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
+
+                            <br>
+                            <h4>Total Price :<span id="totalprice">{{ total }}</span></h4>
+                            <a href="{% url 'user_place_order' %}" class="btn btn-sm btn-primary">Place Order</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--Table end-->
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'product' %}" class="btn btn-primary py-3 px-5">Add More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function increse(id){
+        $.ajax({
+            url : 'i',
+            type : 'GET',
+            data : {
+              'id':id
+            },
+            success : function(data){
+              console.log(data.quantity)
+              document.getElementById('quantity'+id).value = data.quantity
+              document.getElementById('totalprice').innerHTML = data.total
+
+            }
+          })
+    }
+
+
+    
+    function decrement(id){
+        $.ajax({
+            url : 'd',
+            type : 'GET',
+            data : {
+                'id': id
+            },
+            success : function(data){
+                console.log(data.quantity)
+                if (data.quantity == 0){
+                    location.href = ''
+                }else{
+                    document.getElementById('quantity'+id).value = data.quantity
+                    document.getElementById('totalprice').innerHTML = data.total
+              
+                }
+                
+            }
+        })
+    }
+
+
+    
+function removecart(productid){
+    swal({
+        title: "Are you sure?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Remove ", {
+            icon: "success",
+          });
+          
+          $.ajax({
+            url : 'remove',
+            type : 'GET',
+            data : {
+                'productid' : productid
+            },
+            success : function(data){
+                location.href = ''
+            }
+          })
+        }
+      });
+}
+
+
+</script>
+
+{% endblock product %}
+
+

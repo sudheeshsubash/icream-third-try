@@ -1,0 +1,93 @@
+{% extends 'admindemo.html' %}
+
+    {% block content %}
+    {% load static %}
+
+                <!-- Table Start -->
+                <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+
+                    <div class="row ">
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">Order History</h6>
+                                <table class="table" id="example">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">User Name</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Product QTY</th>
+                                            <th scope="col">Product Price</th>
+                                            <th scope="col">Payment Type</th>
+                                            <th scope="col">Payment Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for list in order_details %}
+                                        
+                                        <tr>
+                                            <th scope="row">{{forloop.counter}}</th>
+                                            <td>{{list.user_id.username}}</td>
+                                            <td>{{list.product_name}}</td>
+                                            <td>{{list.product_qty}}</td>
+                                            <td>{{list.product_total}}</td>
+
+                                            {% if list.payment_type == 'cod' %}<td>Cash On Delivery</td>{% endif %}
+                                            {% if list.payment_type == 'on' %}<td>Online Payment</td>{% endif %}
+                                            
+                                            {% if list.is_payment %}<td>Payment Success</td>{% else %}<td>Payment Pending</td>{% endif %}
+                                        
+                                        </tr>
+                                        
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!--Table end-->
+
+
+                 
+                <hr><br><br>
+                <nav aria-label="Page navigation example " style="display:none">
+                    <ul class="pagination justify-content-center">
+                {% if order_details.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{order_details.previous_page_number}}">Previous</a></li>
+                {% endif %}
+                <li class="page-item disabled"><a class="page-link">page {{order_details.number}} of {{order_details.paginator.num_pages}}</a></li>
+                {% if  order_details.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{order_details.next_page_number}}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{order_details.paginator.num_pages}}">Last &raquo</a></li>
+                {% endif %}
+                    </ul>
+                  </nav>
+                  
+                  
+
+    
+                  
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            } );
+        } );
+        </script>
+                    
+        
+  
+                   
+                  
+
+    {% endblock %}

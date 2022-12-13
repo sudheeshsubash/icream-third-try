@@ -1,0 +1,70 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>iCREAM</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Customized Bootstrap Stylesheet -->
+
+
+    <!-- Template Stylesheet -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet"> 
+<style>
+    span{
+        display:none;
+    }
+    ul{
+        list-style:none;
+      }
+    ul li{
+        color:red;
+      }
+</style>
+</head>
+
+<body style="background-colour:rgb(F195B2)">
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+
+        <!-- Sign In Start -->
+        <div class="container-fluid">
+            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+                <div class="col-12 border col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a href="{% url 'guest_user_home' %}" class="navbar-brand mx-5 d-none d-lg-block">
+                                <h1 class="m-0 display-4 text-primary"><b class="text-secondary">i</b>CREAM</h1>
+                            </a>
+                          
+                        </div>  <h3>Login with OTP</h3><br>
+                        <form method="POST" action=''>
+                            {% csrf_token %}
+                        {% for x in messages %}
+                            <p class="text-danger" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x}}</p>
+                        {% endfor %} 
+                        <div class="form-floating mb-3">
+                            <label for="floatingInput">OTP</label>
+                            <input type="text" class="form-control" id="floatingInput" name='otp_number' maxlength='4' >
+                            
+                        </div>
+                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Otp varification</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sign In End -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html> 
+

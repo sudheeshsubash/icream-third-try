@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body onload="success()">
+
+
+
+<div class="container" style="margin: 0 auto;width: 50%;padding: 50px;background: #f1f1f1;margin-top: 50px;margin-bottom: 50px;">
+  <div class="row invoice row-printable">
+      <div class="col-md-12">
+          <!-- col-lg-12 start here -->
+          <div class="panel panel-default plain" id="dash_0">
+              <!-- Start .panel -->
+              <div class="panel-body p30">
+                  <div class="row">
+                      <!-- Start .row -->
+                      <!-- col-lg-6 end here -->
+                      <div class="col-lg-6">
+                          <!-- col-lg-6 start here -->
+                          <div class="invoice-from">
+                              <ul class="list-unstyled text-right">
+                                  <li><strong>Invoiced To</strong></li>
+                                  <li>Jakob Smith</li>
+                                  <li>Roupark 37</li>
+                                  <li>New York, NY, 2014</li>
+                                  <li>USA</li>
+                              </ul>
+                          </div>
+                      </div>
+                      <!-- col-lg-6 end here -->
+                      <div class="col-lg-12">
+                         
+                          <div class="invoice-items">
+                              <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                                  <table class="table table-bordered">
+                                      <thead>
+                                          <tr>
+                                              <th class="per70 text-center">Description</th>
+                                              <th class="per5 text-center">Qty</th>
+                                              <th class="per25 text-center">Total</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>1024MB Cloud 2.0 Server - elisium.dynamic.com (12/04/2014 - 01/03/2015)</td>
+                                              <td class="text-center">1</td>
+                                              <td class="text-center">$25.00 USD</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Logo design</td>
+                                              <td class="text-center">1</td>
+                                              <td class="text-center">$200.00 USD</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Backup - 1024MB Cloud 2.0 Server - elisium.dynamic.com</td>
+                                              <td class="text-center">12</td>
+                                              <td class="text-center">$12.00 USD</td>
+                                          </tr>
+                                      </tbody>
+                                      <tfoot>
+                                          <tr>
+                                              <th colspan="2" class="text-right">Sub Total:</th>
+                                              <th class="text-center">$237.00 USD</th>
+                                          </tr>
+                                          <tr>
+                                              <th colspan="2" class="text-right">Tax:</th>
+                                              <th class="text-center">$47.40 USD</th>
+                                          </tr>
+                                          
+                                          <tr>
+                                              <th colspan="2" class="text-right">Grand Total:</th>
+                                              <th class="text-center">$284.4.40 USD</th>
+                                          </tr>
+                                      </tfoot>
+                                  </table>
+                              </div>
+                          </div>
+                          <div class="invoice-footer mt25">
+                              <p class="text-center">Thank you for shopping with us!</p>
+
+                            <a href="{% url 'guest_user_home' %}" class="btn btn-success">Home</a>
+                          </div>
+                      </div>
+                      <!-- col-lg-12 end here -->
+                  </div>
+                  <!-- End .row -->
+              </div>
+          </div>
+          <!-- End .panel -->
+      </div>
+      <!-- col-lg-12 end here -->
+  </div>
+  </div>
+
+
+
+
+
+
+
+    <script>
+      function success(){
+        swal({
+        title: "Order Success",
+        icon: "success",
+      })
+      .then((willDelete) => {
+        
+        if (willDelete) {
+            console.log('Done')
+        }
+      });
+      }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'userdashbord.html' %}
+
+{% block content %}
+
+
+
+
+<h4>{{request.session.username}}</h4><br>
+<h6>Phone Number : <span>{{user_info.phone_number}}</span></h6><br>
+<h6>Account Create : <span>{{user_info.date_joined}}</span></h6><br>
+<h6><a class="btn btn-info" href="{% url 'edituser_details' user_info.pk %}" >Edit Details</a></h6><br>
+
+
+    
+{% endblock content %}

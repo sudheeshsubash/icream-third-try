@@ -1,0 +1,77 @@
+{% extends 'admindemo.html' %}
+
+    {% block content %}
+    {% load static %}
+
+                <!-- Table Start -->
+                <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+
+                    <div class="row ">
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">Category Offer Table </h6>
+                                <a href="{% url 'add_coupons' %}" type="button" class="btn btn-success">Add Category Offers</a>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Offer Name</th>
+                                            <th scope="col">Category Offers</th>
+                                            <th scope="col">Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for coupons in coupon_details %}
+
+                                        <tr>
+                                            <th scope="row">{{coupons.id}}</th>
+                                            <td>{{coupons.coupon_name}}</td>
+                                            <td>{{coupons.offers}}</td>
+                                            <td>{{coupons.category}}</td>
+                                            <td> <button onclick="canclecoupon({{coupons.id}})" class="btn btn-primary"> Cancle </button> </td>
+                                        </tr>
+                                        
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!--Table end-->
+
+    <script>
+        function canclecoupon(id){
+            swal({
+                title: "Are you sure?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                  swal("Cancle Coupon ", {
+                    icon: "success",
+                  });
+                  
+                  $.ajax({
+                    url : '/ordercancle',
+                    type : 'GET',
+                    data : {
+                        'id' : id
+                    },
+                    success : function(data){
+                        console.log(data.cancle)
+                        location.href = ''
+                    }
+                  })
+                }
+              });
+        }
+    </script>
+
+    {% endblock %}

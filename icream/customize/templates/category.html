@@ -1,0 +1,43 @@
+{% extends 'admindemo.html' %}
+
+    {% block content %}
+    {% load static %}
+
+                <!-- Table Start -->
+                <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+
+                    <div class="row ">
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <h6 class="mb-4">Category Table </h6>
+                                <a href="{% url 'add_product_category' %}" type="button" class="btn btn-success">Add Category</a>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Category Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for categoryitem in category_name %}
+
+                                        <tr>
+                                            <th scope="row">{{categoryitem.id}}</th>
+                                            <td>{{categoryitem.category_name}}</td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!--Table end-->
+
+    {% endblock %}

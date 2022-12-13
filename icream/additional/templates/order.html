@@ -1,0 +1,80 @@
+{% extends 'userdashbord.html' %}
+
+{% block content %}
+
+  <!-- Table Start -->
+
+  <div class="bg-light rounded ">
+    <h6 class="mb-3">User Table</h6>
+    <table class="table display nowrap">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          {% for item in order_history %}
+          
+          <tr>
+              <td> <a href="{% url 'orders_all_product' item.id %}" onMouseOver="this.style.text-decoration='none'">{{ forloop.counter }} </a></td>
+              <td> <a href="{% url 'orders_all_product' item.id %}" onMouseOver="this.style.text-decoration='none'">{{ item.user.username }}</a> </td>
+              <td> <a href="{% url 'orders_all_product' item.id %}" onMouseOver="this.style.text-decoration='none'">{{ item.order_date }}</a> </td>
+              <td> <a href="{% url 'orders_all_product' item.id %}" onMouseOver="this.style.text-decoration='none'">{{ item.total_price }}</a> </td>
+              
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+    <!--Table end-->
+
+
+    <script>
+
+      function cancelorder(orderid){
+        console.log(orderid)
+        swal({
+          title: "Are you sure? Cancel Your Order",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("Cancel Or", {
+              icon: "success",
+            });
+            $.ajax({
+              url : 'cancel',
+              type : 'GET',
+              data : {
+                'orderid' : orderid
+              },
+              success : function(data){
+                console.log(data.yes)
+                location.href = ""
+              }
+
+            })
+          }
+        });
+      }
+  
+
+
+    </script>
+                        
+                        
+
+
+{% endblock content %}
+
+

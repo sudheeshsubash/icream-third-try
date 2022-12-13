@@ -1,0 +1,140 @@
+{% extends 'navandfooter.html' %}
+
+{% block w %}{{wishlist_badge}}{% endblock w %}
+{% block c %}{{cart_badge}}{% endblock c %}
+
+{% block carousel %}{% endblock carousel %}
+
+ 
+{% block product %}
+    
+    <!-- Products Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative text-center mb-5">Best Prices We Offer For Ice Cream Lovers</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <form actoin="" method="POST">
+                        {% csrf_token %}
+
+                            <select class="btn btn-sm btn-outline-primary m-1" onchange="filterproduct()" id="prouductlist" name="categoryname">
+                                {% for list in category_list %}
+                                <option value="{{list.id}}" id="values{{list.id}}" >{{list.category_name}}</option>
+                                {% endfor %}
+                            </select >
+                            <button class="btn btn-outline-primary"><i class="bi bi-search">Fillter</i></button>
+                        </form>
+                </div>
+            </div><br><br>
+            <div class="row">
+                {% for list in product_pagination %}
+                <div class="col-lg-3 col-md-6 mb-4 pb-2">
+                    <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                        
+                        <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                            <h6 class="font-weight-bold text-white mb-0"><i class="fa fa-inr" style="font-size:20px"></i>&nbsp;{{list.is_offers}}</h6>
+                        </div>
+                        <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
+                            <img class="rounded-circle w-100 h-100" src="{{list.product_image.url}}" style="object-fit: cover;">
+                        </div>
+                        <div class="container align-text-top">
+                            {% if list.is_available %}
+                            <span class="text-success">stocks {{list.is_available}}<span>
+                            {% else %}
+                            <span class="text-danger">out of stock<span>
+                            {% endif %}
+                        </div><br>
+                        <h5 class="font-weight-bold mb-4">{{list.product_name}}</h5>
+                        <a href="{% url 'details' list.id %}" class="btn btn-sm btn-secondary">View Details</a>
+                        <br>
+                        <div>
+                        <!--cart-->
+                        {% if 'username' in request.session %}
+                        <a onclick="addtocart({{list.id}})" style="cursor:pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                            </a>
+                        {% endif %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <!--wishlist-->
+                        {% if 'username' in request.session %}
+                        <a  onclick="addtowishlist({{list.id}})" style="cursor:pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                            </svg>
+                            </a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <!-- Products End -->
+
+
+
+
+
+    <hr><br><br>
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+    {% if product_pagination.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{product_pagination.previous_page_number}}">Previous</a></li>
+    {% endif %}
+    <li class="page-item disabled"><a class="page-link">page {{product_pagination.number}} of {{product_pagination.paginator.num_pages}}</a></li>
+    {% if  product_pagination.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{product_pagination.next_page_number}}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{product_pagination.paginator.num_pages}}">Last &raquo</a></li>
+    {% endif %}
+        </ul>
+      </nav>
+
+
+
+<!--this is base concept of paginations -->
+<!--{{product_pagination}}
+<br>
+previous : {{product_pagination.has_previous}}<br>
+next : {{product_pagination.has_next}}<br>
+current page : {{product_pagination.number}}<br>
+number of page : {{product_pagination.paginator.num_pages}}<br>-->
+
+
+
+<script>
+    function filterproduct(){
+        console.log('id')
+        let values = document.getElementById('prouductlist').value
+        console.log(values)
+        fetch('http://127.0.0.1:8000/homecproduct/'+values,)
+            }
+            .then(response => {
+                location.href=""
+        })
+</script>
+
+
+
+{% endblock product %}
+

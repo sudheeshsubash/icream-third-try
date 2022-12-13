@@ -1,0 +1,173 @@
+{% extends 'navandfooter.html' %}
+
+{% block carousel %}
+
+
+    <!-- Contact Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h1 class="section-title position-relative text-center mb-5">Place Order</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    
+
+                    <h6 class="mb-4">Product</h6>
+                    <table class="table">
+                        <tbody>
+
+                            {% for cart in cart_details %}
+                            <tr>
+                                <th scope="row">{{cart.product_id.product_name}}</th>
+                                <td>
+                                    <img src="{{cart.product_id.product_image.url}}" width = '100px' height = '100px'>
+                                </td>
+                                <td>Quantity : {{cart.cart_quantity}}</td>
+                                <td>Total Price : {{cart.total_price}}.00</td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    <br>
+                        <h4>Total Price : <span id="total">{{ total }}.00</span></h4>
+                    <br><br><br>
+
+                    <a href="{% url 'add_address' %}" class="btn btn-primary"  >New Address</a>
+
+                    <br><br><br>
+                    <div>
+                        {% for coupon in ordercoupon %}
+                        {% if  coupon.is_use == 0 %}
+                        <div class="card">
+                            <div class="card-header">
+                              <b id="couponone">{{coupon.c_off}}%</b>
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title">{{coupon.c_name}}</h5>
+                              <p class="card-text">{{coupon.c_description}}</p>
+                                <i onclick="couponapplyone({{coupon.c_off}},{{coupon.id}})" class="btn  {% cycle 'btn-success' 'btn-info' 'btn-primary'%}">Apply Coupon Offers</i>
+                            </div>
+                          </div>
+                          <br><br><br>
+                          {% endif %}
+                          {% endfor %}
+                    
+                    <div class="contact-form bg-light rounded p-5">
+                        <div id="success"></div>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            {% for address in previous_address %}
+                            Previous Address<br><br>
+                            <div class="form-check border" >
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="previousaddress" id="" style="line-height: 30px;" value="{{ address.id }}" required>
+                                <i>{{ address.username }}</i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{ address.phone_number }}</i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{ address.email }}</i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{ address.city }}</i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{ address.state }}</i>
+                              </label>
+                            </div>
+
+                            {% endfor %}
+
+                            <br><br>
+                            <div class="form-check">
+                                <input class="form-check-input" value="cod" type="radio" name="paymenttype" id="cod" required>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                  Cash on delivery
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" value="on" type="radio" name="paymenttype" id="on" required>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                  onlline Payment
+                                </label>
+                              </div>
+                              <br>
+
+                              <div>
+                                <input class="btn btn-primary btn-block py-3 px-5"  type="submit" id="sendMessageButton">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+    <script>
+
+        function paymentconfirm(){
+            var csrf = $("input[name=csrfmiddlewaretoken]").val();
+            var radiotype = $("input[type='radio']:checked").val();
+            var emaii = $("input[name=user_email]").val();
+            var state = $("input[name=user_state]").val();
+            var pincode = $("input[name=user_pincode]").val();
+            var phone = $("input[name=user_phone]").val();
+            var address = $("textarea[name=user_address]").val();
+
+            console.log(radiotype,emaii,state,pincode,phone,address)
+            $.ajax({
+                url : '',
+                type : 'POST',
+                data : {
+                    csrfmiddlewaretoken : csrf,
+                    'emaii' : emaii,
+
+                },
+                success : function(data){
+
+                }
+            
+            })
+        }
+
+
+
+
+    function couponapplyone(n,id){
+        console.log(n)
+        $.ajax({
+            url : '/addcoupon/',
+            type : 'GET',
+            data : {
+                'coupon':n,
+                'id':id
+            },
+            success : function(data){
+                document.getElementById('total').innerHTML = data.total
+            }
+        })
+    }
+
+
+
+
+
+    function couponapplytwo(){
+        console.log('two')
+        $.ajax({
+            url : '/addcoupon/',
+            type : 'GET',
+            data : {
+                'coupon':27
+            },
+            success : function(data){
+                document.getElementById('total').innerHTML = data.total
+            }
+        })
+    }
+    </script>
+
+{% endblock %}

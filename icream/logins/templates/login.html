@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>iCREAM</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Customized Bootstrap Stylesheet -->
+
+
+    <!-- Template Stylesheet -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet"> 
+<style>
+    span{
+        display:none;
+    }
+    ul{
+        list-style:none;
+      }
+    ul li{
+        color:red;
+      }
+</style>
+</head>
+
+<body style="background-colour:rgb(F195B2)">
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+
+        <!-- Sign In Start -->
+        <div class="container-fluid">
+            <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+                <div class="col-12 border col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                    <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a href="{% url 'guest_user_home' %}" class="navbar-brand mx-5 d-none d-lg-block">
+                                <h1 class="m-0 display-4 text-primary"><b class="text-secondary">i</b>CREAM</h1>
+                            </a>
+                            
+                        </div><h3>Login</h3><br>
+                        <form method="POST" action=''>
+                            {% csrf_token %}
+                        {% for x in messages %}
+                            <p class="text-danger" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x}}</p>
+                        {% endfor %} 
+                            {{formfield}}
+                        <br>
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div class="form-check">
+                                <!--<input type="checkbox" class="form-check-input" id="exampleCheck1"> -->
+                                <a href="{% url 'verifyotp' %}" class="form-check-label" for="exampleCheck1">Login with otp</a>
+                            </div>
+                            <a href="{% url 'forget_password' %}">Forgot Password</a>
+                        </div>
+                        <button type="submit" onclick='storename()' class="btn btn-primary py-3 w-100 mb-4">Login</button>
+                        <p class="text-center mb-0">Don't have an Account? <a href="{% url 'registration' %}">registration</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sign In End -->
+    </div>
+
+    <script>
+        function storename(){
+            var name = document.getElementById('id_username').value;
+            console.log(name)
+            localStorage.setItem('username',name)
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html> 
+

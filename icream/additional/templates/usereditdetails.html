@@ -1,0 +1,22 @@
+
+{% extends 'userdashbord.html' %}
+
+{% block content %}
+
+<h2>Add Category Coupon</h2>
+
+<form method='post' action='' enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <div class="container">
+    {{forms.as_p}}
+
+    <button type="submit" class="btn btn-primary">Add Coupon</button>
+    </div>
+
+    
+  </form>
+
+  {% endblock content %}
+  

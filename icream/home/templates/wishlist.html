@@ -1,0 +1,82 @@
+{% extends 'navandfooter.html' %}
+
+{% block w %}{{wishlist_badge}}{% endblock w %}
+{% block c %}{{cart_badge}}{% endblock c %}
+
+{% block carousel %}{% endblock carousel %}
+
+
+{% block product %}
+
+
+
+    <!-- Products Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                {% for list in product_list %}
+                    
+
+                            <div class="col-lg-3 col-md-6 mb-4 pb-2">
+                                <div class="product-item d-flex flex-column align-items-center text-center bg-light rounded py-5 px-3">
+                                    <div class="bg-primary mt-n5 py-3" style="width: 80px;">
+                                        <h4 class="font-weight-bold text-white mb-0"><i class="fa fa-inr" style="font-size:23px"></i>&nbsp;{{list.product_id.product_price}}</h4>
+                                    </div>
+                                    <div class="position-relative bg-primary rounded-circle mt-n3 mb-4 p-3" style="width: 150px; height: 150px;">
+                                        <img class="rounded-circle w-100 h-100" src="{{list.product_id.product_image.url}}" style="object-fit: cover;">
+                                    </div>
+                                    <h5 class="font-weight-bold mb-4">{{list.product_id.product_name}}</h5>
+                                    <a onclick="addtocart_inwishlist({{ list.product_id.id }})" class="btn btn-sm btn-success">Addtocart</a>
+                                    <br>
+                                    <a onclick="removewishlist({{ list.product_id.id }})" class="btn btn-sm btn-secondary">Remove</a>
+                                    
+                                </div>
+                            </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <!-- Products End -->
+
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{% url 'product' %}" class="btn btn-primary py-3 px-5">Add More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addtocart_inwishlist(id){
+        console.log('this is wishlist ')
+        $.ajax({
+            url : '/home/addtocartinwishlist',
+            type : 'GET',
+            data : {
+                'id':id
+            },
+            success : function(data){
+                console.log(data.result)
+                if(data.result){
+                    swal({
+                        title: "Already Added",
+                        icon: "info",
+                      })
+                    }else{
+                    swal({
+                        title: "Add To Cart",
+                        icon: "success",
+                      })
+                    location.href=""
+                }
+            }
+        })
+    }
+</script>
+
+{% endblock product %}
