@@ -87,6 +87,7 @@ def add_product(request):
         product_add.product_discription = product_discription
         product_add.Cutegory_id_id = category_id
         product_add.is_available = 100
+        product_add.is_offers = product_add.product_price
 
         product_add.save()
 
