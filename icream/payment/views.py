@@ -12,7 +12,7 @@ from customize.models import Coupon
 
 
 
-def save_to_database(request,id):
+def save_to_database(request):
     user_id = UserInfo.objects.get(username = request.session['username'])
     cart_details = ProductCart.objects.filter(user_id_id = user_id.id)
     cart_length = len(cart_details)
@@ -30,7 +30,6 @@ def save_to_database(request,id):
         order.is_delivered = False
         order.payment_type = helper.payment_type
         order.address_id = helper.address_id
-        print(f"this is helper.id : {helper.address_id}")
         if helper.payment_type == 'cod':
             order.is_payment = False
         elif helper.payment_type == 'on':
@@ -47,7 +46,7 @@ def save_to_database(request,id):
 # online payment razopay
 
 @csrf_exempt
-def payment_with_razopay(request,total,id):
+def payment_with_razopay(request,total):
     print(total)
     if request.method == 'POST':
         client = razorpay.Client(auth=("rzp_test_4HjOMIihE6753m", "iQpYLgAzjV8fjB7UulrmXINv"))
@@ -60,7 +59,7 @@ def payment_with_razopay(request,total,id):
         
         return render(request,'paymentsuccess.html')
 
-    save_to_database(request,id=id)
+    save_to_database(request)
     return render(request,'paymentrazopay.html',{'total':total})
 
 
@@ -83,7 +82,7 @@ def cash_on_delivery(request,id,ptype):
     pack_id = OrderPackage.objects.filter().order_by('-id')[:1]
     for x in pack_id:
         helper.orderpack_id = x.id
-    save_to_database(request,id=id)
+    save_to_database(request)
     return render(request,'paymentsuccess.html')
 
 
@@ -119,7 +118,7 @@ def user_place_order(request):
             # return render(request,'cart.html')
             return redirect('cash_on_delivery',id=previousaddress,ptype=paymenttype)
         elif paymenttype == 'on':
-            return redirect('payment_with_razopay',total=total,id=previousaddress)
+            return redirect('payment_with_razopay',total=total)
     
     return render(request,'placeorder.html',{'cart_details':cart_details,'total':total,'previous_address':previous_address,"ordercoupon":ordercoupon})
 
