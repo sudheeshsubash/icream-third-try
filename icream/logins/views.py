@@ -28,7 +28,7 @@ def login(request):
             login_username = request.POST['username']
             login_password = request.POST['password']
             try:
-                user = authenticate(username=login_username,password= login_password)
+                user = authenticate(request,username=login_username,password= login_password)
             except:
                 messages.error(request,'Your Not Valid')
                 return redirect('login')
