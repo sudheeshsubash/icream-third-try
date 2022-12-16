@@ -27,22 +27,26 @@ def login(request):
         if forms.is_valid():
             login_username = request.POST['username']
             login_password = request.POST['password']
-            user = authenticate(username=login_username,password= login_password)
-            if user is not None :
-
-                if user.is_superuser:
-                    request.session['adminusername'] = login_username
-                    return redirect('dashbord')
-                
-                if not UserInfo.objects.get(username=login_username).is_block:
-                    request.session['username'] = login_username
-                    helper.username = login_username
-                    return redirect('guest_user_home')
-                
-                messages.error(request,'Your account has been blocked')
+            try:
+                user = authenticate(username=login_username,password= login_password)
+            except:
+                messages.error(request,'Your Not Valid')
                 return redirect('login')
+            else:
+                if user is not None :
 
-            messages.error(request,'user is not valid')
+                    if user.is_superuser:
+                        request.session['adminusername'] = login_username
+                        return redirect('dashbord')
+                    
+                    if not UserInfo.objects.get(username=login_username).is_block:
+                        request.session['username'] = login_username
+                        helper.username = login_username
+                        return redirect('guest_user_home')
+                    
+                    messages.error(request,'Your account has been blocked')
+                    return redirect('login')
+                messages.error(request,'user is not valid')
 
     return render(request,'login.html',{'formfield':forms})
 
