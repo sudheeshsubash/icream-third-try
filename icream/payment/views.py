@@ -30,6 +30,7 @@ def save_to_database(request):
         order.is_delivered = False
         order.payment_type = helper.payment_type
         order.address_id = helper.address_id
+        print(helper.address_id)
         if helper.payment_type == 'cod':
             order.is_payment = False
         elif helper.payment_type == 'on':
@@ -100,8 +101,6 @@ def user_place_order(request):
     previous_address = OrderAddress.objects.all()
     coupons_details = Coupon.objects.all()
     ordercoupon = OrderCoupon.objects.all()
-    print(helper.coupontotal)
-    print(helper.total)
 
     total = int()
     for c in cart_details:
