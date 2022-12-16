@@ -119,17 +119,18 @@ def registration(request):
 def otp_validate(request):
     
     if request.method == 'POST':
-        user_input_otp = request.POST['otp_number']
+        user_input_otp = int(request.POST['otp_number'])
+        print(int(user_input_otp) == helper.otp_number())
+        try:
+            if user_input_otp == helper.otp_number():
 
-        if int(user_input_otp) == helper.otp_number():
-
-            user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
-            user.save()
-            print(user.id)
-            request.session['username'] = helper.username
-            return redirect('guest_user_home')
-            
-        messages.error(request,'otp is not currect')
+                user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
+                user.save()
+                print(user.id)
+                request.session['username'] = helper.username
+                return redirect('guest_user_home')
+        except:
+            messages.error(request,'otp is not currect')
     return render(request,'otpgenerate.html')
 
 
