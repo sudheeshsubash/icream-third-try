@@ -191,9 +191,9 @@ def phone_with_otp(request):
             return redirect('user_home',id=user.id)
 
 
+
         messages.error(request,'otp is not currect')
     return render(request,'otpgenerate.html')
-
 
 #Login with otp end
 
