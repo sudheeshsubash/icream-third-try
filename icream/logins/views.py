@@ -124,6 +124,7 @@ def otp_validate(request):
         try:
             if user_input_otp == helper.otp_number():
 
+
                 user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
                 user.save()
                 print(user.id)
