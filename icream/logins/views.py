@@ -120,7 +120,6 @@ def otp_validate(request):
     
     if request.method == 'POST':
         user_input_otp = int(request.POST['otp_number'])
-        print(int(user_input_otp) == helper.otp_number())
         try:
             if user_input_otp == helper.otp_number():
 
