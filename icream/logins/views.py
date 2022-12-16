@@ -183,7 +183,7 @@ def verifyotp(request):
 
 def phone_with_otp(request):
     if request.method == 'POST':
-        user_input_otp = request.POST['otp_number']
+        user_input_otp = int(request.POST['otp_number'])
         if int(user_input_otp) == helper.otp_number():
             
             user = UserInfo.objects.get(username = helper.username)
