@@ -28,7 +28,6 @@ def login(request):
             login_username = request.POST['username']
             login_password = request.POST['password']
             user = authenticate(username=login_username,password= login_password)
-            print(user.id)
             if user is not None :
 
                 if user.is_superuser:
