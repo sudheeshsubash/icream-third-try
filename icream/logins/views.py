@@ -132,8 +132,8 @@ def otp_validate(request):
         if int(user_input_otp) == int(request.session['otpnumber']):
             user = UserInfo()
             user.username = request.session['registerusernam']
-            user.password = request.session['registerphone']
-            user.phone_number = request.session['registerpassword']
+            user.password = request.session['registerpassword']
+            user.phone_number = request.session['registerphone']
             user.is_block = False
             # user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
             user.save()
