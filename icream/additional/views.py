@@ -13,7 +13,7 @@ def guest_user_home(request):
     product_items = Product.objects.all()
     curosal = Banner.objects.all()
     if 'username' in request.session:
-        user_id = UserInfo.objects.get(username = request.session['username'])
+        user_id = UserInfo.objects.get(username = 'sudheeshs')
         cart_badge = len(ProductCart.objects.filter(user_id_id = user_id.id))
         wishlist_badge = len(ProductWishlist.objects.filter(user_id_id = user_id.id))
         return render(request,'guestUserHome.html',{'product_items':product_items,'curosal':curosal,'cart_badge':cart_badge,'wishlist_badge':wishlist_badge})
