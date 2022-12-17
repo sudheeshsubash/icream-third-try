@@ -18,6 +18,10 @@ function addtocart(pid){
               title: "Add To Cart",
               icon: "success",
             })
+          var cartvalue = document.getElementById("cartvalue")
+          cartvalue.innerText = data.cartquantity
+          console.log(cartvalue)
+          console.log(data.cartquantity)
       }
       }
   })

@@ -83,13 +83,14 @@ def edituser_details(request,id):
     userinfo = UserInfo.objects.get(id=id)
     forms = EditUserDetails(request.POST or None,instance=userinfo)
     if request.method == 'POST':
-        print('this is post method and edit user function is run')
+        userinfo.username = request.POST['username']
+        userinfo.first_name = request.POST['first_name']
+        userinfo.last_name = request.POST['last_name']
+        userinfo.email = request.POST['email']
+        userinfo.phone_number = request.POST['phone_number']
+        userinfo.save()
         return redirect('user_profile')
     return render(request,'usereditdetails.html',{'forms':forms})
-
-
-
-
 
 
 

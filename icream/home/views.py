@@ -91,6 +91,7 @@ def add_to_cart(request):
     '''
     user_id = UserInfo.objects.get(username = request.session['username'])
     id = request.GET['pid']
+    
     if ProductCart.objects.filter(product_id_id = id).exists():
         return JsonResponse({'value':1})
     else:
@@ -101,7 +102,9 @@ def add_to_cart(request):
         product_cart.total_price = product_cart.product_id.is_offers
 
         product_cart.save()
-        return JsonResponse({'value':0})
+        total_products_in_cart = len(ProductCart.objects.filter(user_id_id = user_id.pk))
+        print(total_products_in_cart)
+        return JsonResponse({'value':0,'cartquantity':total_products_in_cart})
 
 
 
@@ -197,7 +200,9 @@ def add_product_to_wishlist(request):
         add_product_to_wishlist.user_id_id = user_id.id
         add_product_to_wishlist.product_id_id = pid
         add_product_to_wishlist.save()
-    return JsonResponse({'result':0})
+        productwishllist = len(ProductWishlist.objects.filter(user_id_id = user_id.id).filter(user_id_id = user_id.pk))
+
+    return JsonResponse({'result':0,"productwishllist":productwishllist})
 
 
 

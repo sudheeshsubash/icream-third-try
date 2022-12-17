@@ -95,7 +95,7 @@
                         <!--<a onclick="wishlist()" style="cursor:pointer" class="nav-item nav-link">Wishlist</a>-->
                         
                         <a href='{% url "product_wishlist"  %}' style="cursor:pointer" class="nav-item nav-link">Wishlist
-                            <span class="badge badge-pill badge-primary">{% block w %}{% endblock w %}</span>
+                            <span class="badge badge-pill badge-primary" id="wishlistvalue">{% block w %}{% endblock w %}</span>
                         </a>
                         {% else %}
                         <a href="{% url 'login' %}" class="nav-item nav-link">Wishlist</a>
@@ -109,7 +109,7 @@
 
                         {% if 'username' in request.session %}
                         <a href="{% url 'cart' %}" class="nav-item nav-link">Cart
-                            <span class="badge badge-pill badge-primary">{% block c %}{% endblock c %}</span>
+                            <span class="badge badge-pill badge-primary" id="cartvalue">{% block c %}{% endblock c %}</span>
                         </a>
                         {% else %}
                         <a href="{% url 'login' %}" class="nav-item nav-link">Cart</a>
@@ -188,27 +188,27 @@
                     </a>
                 </div>
                 <div class="col-12 mb-4">
-                    <a class="btn btn-outline-secondary btn-social mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-secondary btn-social mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-secondary btn-social mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-outline-secondary btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-secondary btn-social mr-2" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-secondary btn-social mr-2" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-secondary btn-social mr-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-secondary btn-social" href=""><i class="fab fa-instagram"></i></a>
                 </div>
                 <div class="col-12 mt-2 mb-4">
                     <div class="row">
                         <div class="col-sm-6 text-center text-sm-right border-right mb-3 mb-sm-0">
                             <h5 class="font-weight-bold mb-2">Get In Touch</h5>
-                            <p class="mb-2">123 Street, New York, USA</p>
-                            <p class="mb-0">+012 345 67890</p>
+                            <p class="mb-2">KOLLAM, KERALA, INDIA</p>
+                            <p class="mb-0">+91 9526495274</p>
                         </div>
                         <div class="col-sm-6 text-center text-sm-left">
                             <h5 class="font-weight-bold mb-2">Opening Hours</h5>
-                            <p class="mb-2">Mon – Sat, 8AM – 5PM</p>
+                            <p class="mb-2">Mon – Sat, 8AM – 11AM</p>
                             <p class="mb-0">Sunday: Closed</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
-                    <p class="m-0">&copy; <a href="#">Domain</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">HTML Codex</a>
+                    <p class="m-0">&copy; <a href="">ICREAM</a>. All Rights Reserved. Designed by <a href="https://htmlcodex.com">Sudheesh s</a>
                     </p>
                 </div>
             </div>
@@ -221,6 +221,7 @@
     <script>
         function addtowishlist(n){
             console.log(n)
+            console.log("actualy this function is working")
                 $.ajax({
                 url : 'addwishlist',
                 type : 'GET',
@@ -239,6 +240,9 @@
                             icon: "warning",
                             icon: "success",
                           })
+                        var wishlistvalue = document.getElementById('wishlistvalue')
+                        wishlistvalue.innerText = data.productwishllist
+
                     }
                 }
             })

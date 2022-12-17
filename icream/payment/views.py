@@ -29,7 +29,8 @@ def save_to_database(request):
         order.is_cancel = False
         order.is_delivered = False
         order.payment_type = helper.payment_type
-        order.address_id = helper.address_id
+        order.address_id = int(helper.address_id)
+        print(type(helper.address_id))
         if helper.payment_type == 'cod':
             order.is_payment = False
         elif helper.payment_type == 'on':
@@ -68,6 +69,7 @@ def payment_with_razopay(request,total):
 # cash on delivery
 
 def cash_on_delivery(request,id,ptype):
+    print(id)
     user_id = UserInfo.objects.get(username = request.session['username'])
     orderpack = OrderPackage()
     orderpack.user_id = user_id.pk

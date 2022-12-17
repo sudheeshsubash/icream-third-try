@@ -53,6 +53,7 @@
 
 <script>
     function addtocart_inwishlist(id){
+        
         console.log('this is wishlist ')
         $.ajax({
             url : '/home/addtocartinwishlist',
@@ -72,8 +73,9 @@
                         title: "Add To Cart",
                         icon: "success",
                       })
-                    location.href=""
                 }
+            var productwishllist = document.getElementById('productwishllist')
+            productwishllist.innerText = data.productwishllist
             }
         })
     }

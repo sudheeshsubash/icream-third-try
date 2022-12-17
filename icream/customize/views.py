@@ -175,7 +175,7 @@ def banners(request):
 
 def add_banner(request):
     
-    forms = AddBanner(request.POST or None )
+    forms = AddBanner(request.POST or None,request.FILES )
     if request.method == 'POST':
         if forms.is_valid():
 

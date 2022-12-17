@@ -37,6 +37,8 @@ def login(request):
 
                     if user.is_superuser:
                         request.session['adminusername'] = login_username
+                        print(request.session['adminusername'])
+                        print(type(request.session['adminusername']))
                         return redirect('dashbord')
                     
                     if not UserInfo.objects.get(username=login_username).is_block:
@@ -94,6 +96,7 @@ def registration(request):
                         helper.username = username
                         helper.phone = phone_number
                         otp_number = helper.otp()
+                        request.session['otpnumber'] = otp_number()
                         helper.password = register_confirm_password
                         helper.otp_number = otp_number
 
@@ -121,11 +124,11 @@ def otp_validate(request):
     if request.method == 'POST':
         user_input_otp = int(request.POST['otp_number'])
         try:
-            if int(user_input_otp) == int(helper.otp_number()):
+            if int(user_input_otp) == int(request.session['otpnumber']):
                 user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
                 user.save()
-                print(user.id)
                 request.session['username'] = helper.username
+                del request.session['otpnumber']
                 return redirect('guest_user_home')
         except:
             messages.error(request,'otp is not currect')
@@ -164,8 +167,10 @@ def verifyotp(request):
 
                     if not UserInfo.objects.get(username=username).is_block:
 
-                        helper.otp_number = otp_number
+                        
                         otp_number = helper.otp()
+                        request.session['otpnumber'] = otp_number()
+                        helper.otp_number = otp_number
                         helper.username = username
                         
 
@@ -184,13 +189,12 @@ def verifyotp(request):
 def phone_with_otp(request):
     if request.method == 'POST':
         user_input_otp = int(request.POST['otp_number'])
-        if int(user_input_otp) == helper.otp_number():
-            print(int(user_input_otp)==helper.otp_number())
+        
+        if int(user_input_otp) == int(request.session['otpnumber']):
             user = UserInfo.objects.get(username = helper.username)
             request.session['username'] = helper.username
-            return redirect('user_home',id=user.id)
-
-
+            del request.session['otpnumber']
+            return redirect('guest_user_home')
 
         messages.error(request,'otp is not currect')
     return render(request,'otpgenerate.html')

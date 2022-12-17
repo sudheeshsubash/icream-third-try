@@ -16,6 +16,7 @@ otp_number = str()
 def otp():
     otp_number = random.randint(1001,9999)
     print(otp_number)
+    
     url = "https://www.fast2sms.com/dev/bulkV2"
 
     payload = f"variables_values={otp_number}&route=otp&numbers={phone}"
