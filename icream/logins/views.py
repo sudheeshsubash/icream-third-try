@@ -97,6 +97,9 @@ def registration(request):
                         helper.phone = phone_number
                         otp_number = helper.otp()
                         request.session['otpnumber'] = otp_number()
+                        request.session['registerusernam'] = username
+                        request.session['registerphone'] = phone_number
+                        request.session['registerpassword'] = register_confirm_password
                         helper.password = register_confirm_password
                         helper.otp_number = otp_number
 
@@ -128,13 +131,14 @@ def otp_validate(request):
         # print(f"if condition check for why its not working {int(user_input_otp) == (request.session['otpnumber'])}")
         if int(user_input_otp) == int(request.session['otpnumber']):
             user = UserInfo()
-            user.username = helper.username
-            user.password = helper.password
-            user.phone_number = helper.phone
+            user.username = request.session['registerusernam']
+            user.password = request.session['registerphone']
+            user.phone_number = request.session['registerpassword']
             user.is_block = False
             # user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
             user.save()
-            request.session['username'] = helper.username
+            request.session.flush()
+            request.session['username'] = request.session['registerusernam']
             del request.session['otpnumber']
             return redirect('guest_user_home')
         
