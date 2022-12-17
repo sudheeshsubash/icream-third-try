@@ -12,7 +12,7 @@ from customize.models import Coupon
 
 
 
-def save_to_database(request):
+def save_to_database(request,id,ptype):
     user_id = UserInfo.objects.get(username = request.session['username'])
     cart_details = ProductCart.objects.filter(user_id_id = user_id.id)
     cart_length = len(cart_details)
@@ -29,11 +29,10 @@ def save_to_database(request):
         order.is_cancel = False
         order.is_delivered = False
         order.payment_type = helper.payment_type
-        order.address_id = int(helper.address_id)
-        print(type(helper.address_id))
-        if helper.payment_type == 'cod':
+        order.address_id = int(id)
+        if ptype == 'cod':
             order.is_payment = False
-        elif helper.payment_type == 'on':
+        elif ptype == 'on':
             order.is_payment = True
         order.order_pack_id = helper.orderpack_id
         order.save()
@@ -69,7 +68,6 @@ def payment_with_razopay(request,total):
 # cash on delivery
 
 def cash_on_delivery(request,id,ptype):
-    print(id)
     user_id = UserInfo.objects.get(username = request.session['username'])
     orderpack = OrderPackage()
     orderpack.user_id = user_id.pk
@@ -84,7 +82,7 @@ def cash_on_delivery(request,id,ptype):
     pack_id = OrderPackage.objects.filter().order_by('-id')[:1]
     for x in pack_id:
         helper.orderpack_id = x.id
-    save_to_database(request)
+    save_to_database(request,id,ptype)
     return render(request,'paymentsuccess.html')
 
 
