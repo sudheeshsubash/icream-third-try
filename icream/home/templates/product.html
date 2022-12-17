@@ -128,10 +128,12 @@ number of page : {{product_pagination.paginator.num_pages}}<br>-->
         let values = document.getElementById('prouductlist').value
         console.log(values)
         fetch('http://127.0.0.1:8000/homecproduct/'+values,)
-            }
+            
             .then(response => {
                 location.href=""
+            
         })
+    }
 </script>
 
 

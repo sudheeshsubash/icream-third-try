@@ -154,7 +154,8 @@ def verifyotp(request):
 
             username = request.POST['username']
             phone_number = request.POST['phone_number']
-
+            
+            helper.phone =phone_number
             # exection 
 
             try:
