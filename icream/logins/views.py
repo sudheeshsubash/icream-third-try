@@ -138,8 +138,7 @@ def otp_validate(request):
             # user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
             user.save()
             request.session.flush()
-            request.session['username'] = request.session['registerusernam']
-            del request.session['otpnumber']
+            request.session['username'] = user.username
             return redirect('guest_user_home')
         
         messages.error(request,'otp is not currect')
