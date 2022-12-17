@@ -46,7 +46,7 @@ def save_to_database(request,id,ptype):
 # online payment razopay
 
 @csrf_exempt
-def payment_with_razopay(request,total):
+def payment_with_razopay(request,total,id,ptype):
     print(total)
     if request.method == 'POST':
         client = razorpay.Client(auth=("rzp_test_4HjOMIihE6753m", "iQpYLgAzjV8fjB7UulrmXINv"))
@@ -59,7 +59,7 @@ def payment_with_razopay(request,total):
         
         return render(request,'paymentsuccess.html')
 
-    save_to_database(request)
+    save_to_database(request,id=id,ptype=ptype)
     return render(request,'paymentrazopay.html',{'total':total})
 
 
@@ -118,7 +118,7 @@ def user_place_order(request):
             # return render(request,'cart.html')
             return redirect('cash_on_delivery',id=previousaddress,ptype=paymenttype)
         elif paymenttype == 'on':
-            return redirect('payment_with_razopay',total=total)
+            return redirect('payment_with_razopay',total=total,id=previousaddress,ptype=paymenttype)
     
     return render(request,'placeorder.html',{'cart_details':cart_details,'total':total,'previous_address':previous_address,"ordercoupon":ordercoupon})
 
