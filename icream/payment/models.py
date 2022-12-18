@@ -19,7 +19,7 @@ class OrderAddField(Orders):
 
 class OrderAddress(models.Model):
     '''
-    
+    user address 
     '''
     username = models.CharField(max_length=20)
     phone_number = models.BigIntegerField(default=None)
@@ -28,6 +28,7 @@ class OrderAddress(models.Model):
     state = models.CharField(default=None,max_length=30)
     pincode = models.IntegerField(default=None)
     city = models.CharField(max_length=30,default=None)
+    user_id = models.ForeignKey(UserInfo, on_delete=models.CASCADE,default=None,blank=True,null=True)
 
 
 

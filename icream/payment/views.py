@@ -28,7 +28,7 @@ def save_to_database(request,id,ptype):
         order.product_total = cart_details[x].total_price
         order.is_cancel = False
         order.is_delivered = False
-        order.payment_type = helper.payment_type
+        order.payment_type = ptype
         order.address_id = int(id)
         if ptype == 'cod':
             order.is_payment = False
@@ -97,7 +97,7 @@ def user_place_order(request):
     '''
     user_id = UserInfo.objects.get(username = request.session['username'])
     cart_details = ProductCart.objects.filter(user_id_id = user_id.id).select_related('product_id')
-    previous_address = OrderAddress.objects.all()
+    previous_address = OrderAddress.objects.filter(user_id = user_id.pk)
     coupons_details = Coupon.objects.all()
     ordercoupon = OrderCoupon.objects.all()
 
@@ -134,8 +134,18 @@ def add_address(request):
     forms = AddAddress( request.POST or None )
     if request.method == 'POST':
         if forms.is_valid():
-            forms.save()
-            return redirect('user_place_order')
+            user_id = UserInfo.objects.get(username = request.session['username'])
+            addaddress = OrderAddress()
+            addaddress.username = request.POST['username']
+            addaddress.phone_number = request.POST['phone_number']
+            addaddress.email = request.POST['email']
+            addaddress.address = request.POST['address']
+            addaddress.state = request.POST['state']
+            addaddress.pincode = request.POST['pincode']
+            addaddress.city = request.POST['city']
+            addaddress.user_id_id = user_id.pk
+            addaddress.save()
+            return redirect('user_profile')
     return render(request,'address.html',{'forms':forms})
 
 

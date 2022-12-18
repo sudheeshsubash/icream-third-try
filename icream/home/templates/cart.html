@@ -49,8 +49,11 @@
 
                             <br>
                             <h4>Total Price :<span id="totalprice">{{ total }}</span></h4>
+                            {% if lengthof_cart %}
                             <a href="{% url 'user_place_order' %}" class="btn btn-sm btn-primary">Place Order</a>
-                            
+                            {% else %}
+                            <a href="{% url 'product' %}" class="btn btn-sm btn-primary">Place Order</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

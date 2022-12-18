@@ -4,10 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
 from .models import UserInfo
-
 from . import helper
-
-
 
 # login start
 
@@ -27,12 +24,14 @@ def login(request):
         if forms.is_valid():
             login_username = request.POST['username']
             login_password = request.POST['password']
+            print(f"usernam : {login_username} , password {login_password} ")
             try:
                 user = authenticate(request,username=login_username,password= login_password)
             except:
                 messages.error(request,'Your Not Valid')
                 return redirect('login')
             else:
+                print(user)
                 if user is not None :
 
                     if user.is_superuser:
@@ -130,13 +129,12 @@ def otp_validate(request):
         # print(f"otp number in session {request.session['otpnumber']} and type {type(request.session['otpnumber'])}")
         # print(f"if condition check for why its not working {int(user_input_otp) == (request.session['otpnumber'])}")
         if int(user_input_otp) == int(request.session['otpnumber']):
-            user = UserInfo()
-            user.username = request.session['registerusernam']
-            user.password = request.session['registerpassword']
-            user.phone_number = request.session['registerphone']
-            user.is_block = False
-            # user = UserInfo.objects.create_user(username=helper.username,password=helper.password,phone_number = helper.phone,is_block=0)
-            user.save()
+            # user = UserInfo()
+            # user.username = request.session['registerusernam']
+            # user.password = request.session['registerpassword']
+            # user.phone_number = request.session['registerphone']
+            # user.is_block = False
+            user = UserInfo.objects.create_user(username=request.session['registerusernam'],password=request.session['registerpassword'],phone_number=request.session['registerphone'],is_block=False)
             request.session.flush()
             request.session['username'] = user.username
             return redirect('guest_user_home')

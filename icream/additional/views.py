@@ -1,11 +1,11 @@
 from django.shortcuts import render,redirect
 from home.models import Product,ProductCart,ProductWishlist,UserInfo
-from payment.models import OrderAddField,OrderList,OrderCoupon,OrderPackage
+from payment.models import OrderAddField,OrderList,OrderCoupon,OrderPackage,OrderAddress
 from customize.models import Banner
 from django.http import JsonResponse
 from home.models import UserInfo
 from logins import helper
-from .forms import EditUserDetails
+from .forms import EditUserDetails,EditUserAddress
 # Create your views here.
 
 
@@ -78,7 +78,6 @@ def cancel_order(request):
 
 
 
-
 def edituser_details(request,id):
     userinfo = UserInfo.objects.get(id=id)
     forms = EditUserDetails(request.POST or None,instance=userinfo)
@@ -108,3 +107,25 @@ def addcoupon(request):
     helper.coupontotal = helper.total * (100 - int(coupon))/100
     return JsonResponse({'total':helper.coupontotal})
 
+
+
+def user_address_check(request):
+    user_id = UserInfo.objects.get(username = request.session['username'])
+    current_user_address = OrderAddress.objects.filter(user_id = user_id.pk)
+    return render(request,'useraddresscheck.html',{'current_user_address':current_user_address})
+
+
+
+
+def user_address_edit(request,id):
+    current_user_address = OrderAddress.objects.get(id=id)
+    edituseraddress = EditUserAddress(request.POST or None,instance=current_user_address)
+    if request.POST:
+        edituseraddress.save()
+        return redirect('user_address_check')
+    return render(request,'editaddress.html',{'forms':edituseraddress})
+
+
+
+def error_page(request,exception):
+    return render(request,'404.html')

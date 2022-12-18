@@ -187,3 +187,14 @@ def add_banner(request):
 
 
 # banner end
+
+
+def sales_report(request,order,amount,qty,list,category):
+    content = {
+        'total_order':order,
+        'total_purchase_amount':amount,
+        'total_product_qty':qty,
+        'barlist':list,
+        'category':category,
+    }
+    return render(request,'salesreport.html',content)

@@ -33,15 +33,14 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col-sm-6 col-xl-3">
+                    <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <span class="primary">Sales</span>
+                                <a href="{% url 'sales_report' total_order total_purchase_amount total_product_qty barlist category %}" class="btn border border-primary">Report</a>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
             <!-- Sale & Revenue End -->
@@ -109,11 +108,15 @@
                                 new Chart(ctxs, {
                                 type: 'polarArea',
                                 data: {
-                                    labels:  ['Vanilla','Chocolate','MIlk','Strawberry',],
+                                    labels:  [
+                                    'January', 'February', 'March',
+                                    'April', 'May', 'June', 'July', 'August',
+                                    'September', 'October', 'November', 'December'
+                                    ],
                                     datasets: [{
                                     label: 'Category Report',
-                                    data: {{barlist}},
-                                    backgroundColor:['#e5a8f7','#63afff','#4affde','#94ff70','#ff85ce','#ff8742','#ff8742','#592100'],
+                                    data: {{salespermonth}},
+                                    backgroundColor:['#c0db23','#d44255','#89db37','#311436','#279e15','#edc7ca','#c49c1a','#1aa2c4','#611ac4','#ebc583','#3d89d1','#e645ff'],
                                     borderWidth: 1
                                     }]
                                 },

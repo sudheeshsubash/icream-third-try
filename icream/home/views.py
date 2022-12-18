@@ -80,8 +80,9 @@ def cart(request):
         total += x.total_price
     helper.total = total
     helper.couponid = 0
-    print(helper.total)
-    return render(request,'cart.html',{'cart_list':cart_list,'total':total,'wishlist_badge':wishlist_badge,})
+    print(f"total amount in cart {helper.total}")
+    lengthof_cart = len(cart_list)
+    return render(request,'cart.html',{'cart_list':cart_list,'total':total,'wishlist_badge':wishlist_badge,'lengthof_cart':lengthof_cart})
 
 
 

@@ -15,6 +15,8 @@ urlpatterns = [
     path('addproduct/',views.add_product,name='add_product'),
     path('banner/',views.banners,name='banners'),
     path('addbanner/',views.add_banner,name='add_banner'),
+    path('salesreport/<order>/<amount>/<qty>/<list>/<category>',views.sales_report,name='sales_report'),
+    
     
 ]
  

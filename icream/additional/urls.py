@@ -11,6 +11,6 @@ urlpatterns = [
     path('addcoupon/',views.addcoupon,name='addcoupon'),
     path('orderproducts/<id>',views.orders_all_product,name="orders_all_product"),
     path('userdetailsedit/<id>',views.edituser_details,name='edituser_details'),
-    
-
+    path('address/',views.user_address_check,name="user_address_check"),
+    path('editaddress/<int:id>/',views.user_address_edit,name='user_address_edit')
 ]

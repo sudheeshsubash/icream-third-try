@@ -1,0 +1,38 @@
+{% extends 'admindemo.html' %}
+
+{% block content %}
+<div class="container m-2">
+    <table class="table" id="example">
+        <thead>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Total Number Of Purchase : {{total_order}}</th>
+          </tr>
+          <tr>
+            <th scope="row">Total Amount Of Purchase : {{total_purchase_amount}}</th>
+          </tr>
+          <tr>
+            <th scope="row">Total Quty Of Purchase : {{total_product_qty}}</th>
+          </tr>
+          
+        </tbody>
+    </table>
+</div>
+
+<script>
+  $(document).ready(function() {
+      $('#example').DataTable( {
+          dom: 'Bfrtip',
+          buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+          ]
+      } );
+  } );
+  </script>
+              
+  
+
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+
+{% extends 'userdashbord.html' %}
+
+{% block content %}
+
+  <!-- Table Start -->
+
+  <div class="bg-light rounded ">
+    <h6 class="mb-4">User Address</h6>
+    <table class="table display nowrap">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Phone Number/th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for x in current_user_address %}
+         <tr>
+            <td><a href="{% url 'user_address_edit' x.id %}">{{forloop.counter}}</a></td>
+            <td><a href="{% url 'user_address_edit' x.id %}">{{x.username}}</a></td>
+            <td><a href="{% url 'user_address_edit' x.id %}">{{x.phone_number}}</a></td>
+            <td><a href="{% url 'user_address_edit' x.id %}">{{x.email}}</a></td>
+            <td><a href="{% url 'user_address_edit' x.id %}">{{x.address}}</a></td>
+         </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

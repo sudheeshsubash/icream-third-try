@@ -21,6 +21,12 @@ def dashbord(request):
         return redirect('guest_user_home')
 
     chart_data = OrderList.objects.all()
+    salespermonth = [0,0,0,0,0,0,0,0,0,0,0,0]
+    for a in range(12):
+        for b in chart_data:
+            if b.order_date.month == a+1:
+                salespermonth[a]+=1
+                
     category = Category.objects.all()
     total_order = len(chart_data)
     total_purchase_amount = int()
@@ -45,6 +51,7 @@ def dashbord(request):
         'total_product_qty':total_product_qty,
         'barlist':barlist,
         'category':category,
+        'salespermonth':salespermonth
     }
 
     return render(request,'dashbord.html',content)
